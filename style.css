@@ -1,156 +1,124 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+}
 
 body {
-  margin: 0;
-  font-family: 'Poppins', sans-serif;
-  background: linear-gradient(120deg, #89f7fe, #66a6ff);
+  background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+    url('https://images.unsplash.com/photo-1502082553048-f009c37129b9');
+  background-size: cover;
+  background-position: center;
   min-height: 100vh;
+  color: white;
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  flex-direction: column;
+  align-items: center;
   padding: 40px 20px;
 }
 
-.container {
-  background: #fff;
-  border-radius: 15px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+.card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
   padding: 30px;
-  max-width: 400px;
   width: 100%;
+  max-width: 600px;
   text-align: center;
-  transition: transform 0.3s ease;
+  box-shadow: 0 0 20px rgba(0,0,0,0.4);
 }
 
-.container:hover {
-  transform: scale(1.02);
-}
-
-h1 {
-  margin-bottom: 25px;
-  font-size: 28px;
-  color: #333;
-}
-
-form {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-input[type="text"] {
-  flex: 1;
-  padding: 12px;
+input {
+  padding: 10px;
+  width: 70%;
+  border: none;
   border-radius: 8px;
-  border: 1px solid #ccc;
+  margin: 15px 5px;
   font-size: 16px;
-  transition: 0.2s;
-}
-
-input[type="text"]:focus {
-  outline: none;
-  border-color: #66a6ff;
-  box-shadow: 0 0 5px #66a6ff80;
 }
 
 button {
-  padding: 12px 18px;
-  background: #007bff;
-  color: white;
+  padding: 10px 20px;
+  background: #ff9800;
   border: none;
   border-radius: 8px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: background 0.3s;
-}
-
-button:hover {
-  background: #0056b3;
-}
-
-#weather-info {
-  margin-top: 20px;
-  background: #f8f9fa;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.05);
-}
-
-#weather-info img {
-  width: 100px;
-  height: 100px;
-  margin: 10px auto;
-}
-
-#weather-info p {
-  margin: 8px 0;
-  font-size: 16px;
-}
-
-#local-time {
-  font-size: 14px;
-  color: #555;
-}
-
-#recent-searches {
-  margin-top: 30px;
-  text-align: left;
-}
-
-#recent-searches h3 {
-  font-size: 18px;
-  color: #333;
-  margin-bottom: 10px;
-}
-
-#search-history {
-  list-style: none;
-  padding-left: 0;
-}
-
-#search-history li {
-  background: #e9ecef;
-  padding: 8px 12px;
-  border-radius: 6px;
-  margin-bottom: 6px;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
-#search-history li:hover {
-  background: #ced4da;
-}
-
-.hidden {
-  display: none;
-}
-
-@media screen and (max-width: 500px) {
-  .container {
-    padding: 20px;
-  }
-
-  form {
-    flex-direction: column;
-  }
-
-  button {
-    width: 100%;
-  }
-}
-footer {
-  text-align: center;
-  padding: 15px;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  font-size: 1rem;
-  color: #fff;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
+  color: white;
   font-weight: bold;
-  z-index: 1000;
+  cursor: pointer;
 }
+
+.weather-info, .forecast {
+  margin-top: 30px;
+}
+
+.forecast-container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.day-card {
+  background: rgba(255,255,255,0.1);
+  border-radius: 12px;
+  padding: 15px;
+  margin: 10px;
+  width: 100px;
+}
+
+/* 🔥 GitHub Button */
+.github-btn-pro {
+  margin-top: 30px;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 15px 32px;
+  font-weight: 600;
+  color: white;
+  text-decoration: none;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #24292e, #000);
+  position: relative;
+  overflow: hidden;
+  animation: pulseGlow 2.5s infinite;
+}
+
+.github-svg {
+  width: 22px;
+  height: 22px;
+}
+
+.github-btn-pro::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 120%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition: 0.6s;
+}
+
+.github-btn-pro:hover::before {
+  left: 120%;
+}
+
+.github-btn-pro:hover {
+  transform: scale(1.06);
+}
+
+@keyframes pulseGlow {
+  0% { box-shadow: 0 0 10px rgba(36,41,46,0.6); }
+  50% { box-shadow: 0 0 30px rgba(255,255,255,0.5); }
+  100% { box-shadow: 0 0 10px rgba(36,41,46,0.6); }
+}
+
+footer {
+  margin-top: 30px;
+  text-align: center;
+  font-weight: bold;
+}
+
 footer strong {
-  color: #ffd700; /* You can customize this color */
+  color: #ffd700;
 }
