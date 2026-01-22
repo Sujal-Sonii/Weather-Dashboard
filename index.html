@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weather Dashboard</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1502082553048-f009c37129b9');
+      background-size: cover;
+      background-position: center;
+      min-height: 100vh;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 30px;
+      width: 100%;
+      max-width: 600px;
+      text-align: center;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+    input {
+      padding: 10px;
+      width: 70%;
+      border: none;
+      border-radius: 8px;
+      margin-right: 10px;
+      font-size: 16px;
+    }
+    button {
+      padding: 10px 20px;
+      background: #ff9800;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .weather-info, .forecast {
+      margin-top: 30px;
+    }
+    .forecast-container {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+    }
+    .day-card {
+      background: rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 15px;
+      margin: 10px;
+      text-align: center;
+      width: 100px;
+      backdrop-filter: blur(8px);
+    }
+    .temp {
+      font-size: 28px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>🌤️ Weather Dashboard</h1>
+    <input type="text" id="cityInput" placeholder="Enter city name" />
+    <button onclick="getWeather()">Get Weather</button>
+
+    <div class="weather-info" id="weather">
+      <!-- Real-time weather data will appear here -->
+    </div>
+
+    <div class="forecast" id="forecast">
+      <!-- 5-day forecast will appear here -->
+    </div>
+  </div>
+
+  <script>
+    const apiKey = "b03eb6d67f8d826ee1603f520d830023";
+
+    function getWeather() {
+      const city = document.getElementById('cityInput').value.trim();
+      if (!city) return;
+
+      fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.cod !== 200) {
+            document.getElementById('weather').innerHTML = `<p>City not found 😞</p>`;
+            return;
+          }
+          const weatherHTML = `
+            <h2>${data.name}, ${data.sys.country}</h2>
+            <p class="temp">${data.main.temp}°C</p>
+            <p>${data.weather[0].description}</p>
+            <p>Humidity: ${data.main.humidity}%</p>
+            <p>Wind: ${data.wind.speed} m/s</p>
+          `;
+          document.getElementById('weather').innerHTML = weatherHTML;
+          getForecast(city);
+        });
+    }
+
+    function getForecast(city) {
+      fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric`)
+        .then(res => res.json())
+        .then(data => {
+          const dailyData = data.list.filter(item => item.dt_txt.includes("12:00:00"));
+          let forecastHTML = '<h3>5-Day Forecast</h3><div class="forecast-container">';
+          dailyData.slice(0, 5).forEach(day => {
+            const date = new Date(day.dt_txt);
+            forecastHTML += `
+              <div class="day-card">
+                <strong>${date.toDateString().slice(0, 3)}</strong>
+                <img src="https://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png" alt="icon" />
+                <div>${day.main.temp.toFixed(1)}°C</div>
+              </div>
+            `;
+          });
+          forecastHTML += '</div>';
+          document.getElementById('forecast').innerHTML = forecastHTML;
+        });
+    }
+    
+  </script>
+  
+
+  <br>
+  <br>  
+  <br>
+  
+   <footer>
+    Designed & Developed by <strong> Sujal Soni </strong>
+  </footer>
+  
+</body>
+</html>
